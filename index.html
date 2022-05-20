@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VA Exercise 1</title>
+    <link rel="icon" type="image/x-icon" href="visva_sitelogo_no_white.png" />
+    <link href="main.css" rel="stylesheet" />
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <img
+        class="logo"
+        id="logo"
+        onclick="window.open('https://visva.cs.uni-koeln.de', '_blank')"
+        src="visva_sitelogo_no_white.png"
+      />
+      <div class="buttons">
+        <!-- The request data function might take some time. If button "Task1" does not show
+        anything please reload the page and try again, but wait a couple of seconds between
+        clicking the buttons "Read in data" and "Task 1". The process of the read can also be
+        seen when opening the terminal in your browser.-->
+        <button class="function_button" onclick="request_data()">Read in data</button> 
+        <button class="function_button" onclick="drawVis()">Task 1</button>
+        <button class="function_button" onclick="paintHistogram()">Task 2</button>
+        <button class="function_button" onclick="request_data_2()">Read in data 2</button> 
+        <button class="function_button" onclick="compute_averages_task_2()">Calculate Averages</button> 
+
+      </div>
+    </div>
+    <div id="container">
+      <svg id="svgRoot">
+      </svg>
+      <div id="histogram">
+      </div>
+    </div>
+  </body>
+</html>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="index.js"></script>
+
+<style>
+  table, th, td {
+     border: 1px solid black;
+  }
+</style>
