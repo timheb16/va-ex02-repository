@@ -460,11 +460,11 @@ let get_data_averages = () => {
             {
                 let new_station = {
                     station_id: station ,
-                    avg_co: 0,
-                    avg_no2: 0,
-                    avg_o3: 0,
-                    avg_pm10: 0,
-                    avg_so2: 0,
+                    avg_co: null,
+                    avg_no2: null,
+                    avg_o3: null,
+                    avg_pm10: null,
+                    avg_so2: null,
                 }
                 preprocessed_content_averages.push(new_station)
             }
@@ -498,11 +498,11 @@ let get_data_averages = () => {
                 {
                     let new_station = {
                         station_id: station ,
-                        avg_co: 0,
-                        avg_no2: 0,
-                        avg_o3: 0,
-                        avg_pm10: 0,
-                        avg_so2: 0,
+                        avg_co: null,
+                        avg_no2: null,
+                        avg_o3: null,
+                        avg_pm10: null,
+                        avg_so2: null,
                     }
                     preprocessed_content_averages.push(new_station)
                 }
@@ -536,11 +536,11 @@ let get_data_averages = () => {
                     {
                         let new_station = {
                             station_id: station ,
-                            avg_co: 0,
-                            avg_no2: 0,
-                            avg_o3: 0,
-                            avg_pm10: 0,
-                            avg_so2: 0,
+                            avg_co: null,
+                            avg_no2: null,
+                            avg_o3: null,
+                            avg_pm10: null,
+                            avg_so2: null,
                         }
                         preprocessed_content_averages.push(new_station)
                     }
@@ -551,7 +551,7 @@ let get_data_averages = () => {
                     {
                         sum = sum + values[j]
                     }
-                    preprocessed_content_averages.find(station_to_find => station_to_find.station_id == station).avg_03 = (sum / count).toFixed(2)
+                    preprocessed_content_averages.find(station_to_find => station_to_find.station_id == station).avg_o3 = (sum / count).toFixed(2)
                 }
                 fs.writeFile("Averages_2016.json", JSON.stringify(preprocessed_content_averages), (err) => {
                     if (err) {
@@ -574,11 +574,11 @@ let get_data_averages = () => {
                         {
                             let new_station = {
                                 station_id: station ,
-                                avg_co: 0,
-                                avg_no2: 0,
-                                avg_o3: 0,
-                                avg_pm10: 0,
-                                avg_so2: 0,
+                                avg_co: null,
+                                avg_no2: null,
+                                avg_o3: null,
+                                avg_pm10: null,
+                                avg_so2: null,
                             }
                             preprocessed_content_averages.push(new_station)
                         }
@@ -612,11 +612,11 @@ let get_data_averages = () => {
                             {
                                 let new_station = {
                                     station_id: station ,
-                                    avg_co: 0,
-                                    avg_no2: 0,
-                                    avg_o3: 0,
-                                    avg_pm10: 0,
-                                    avg_so2: 0,
+                                    avg_co: null,
+                                    avg_no2: null,
+                                    avg_o3: null,
+                                    avg_pm10: null,
+                                    avg_so2: null,
                                 }
                                 preprocessed_content_averages.push(new_station)
                             }
