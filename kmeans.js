@@ -143,7 +143,30 @@ function assign_datapoints_to_centroids(
  */
 function calculate_new_centroids(datapoints, centroids, measure_function) {
   let centroids_changed = false
-  // TODO
+  for (let i = 0; i < centroids.length; i++)
+  {
+    let centroid = centroids[i]
+    let centroidarray = []
+    for (let j = 0; j < datapoints.length; j++)
+    {
+      let obj = datapoints[j]
+      if (obj.centroid_index == i)
+      {
+        centroidarray.push(obj)
+      }
+    }
+    let means = measure_function(centroidarray)
+    if (centroid.x != means.x)
+    {
+      centroids_changed = true
+      centroid.x = means.x
+    }
+    if (centroid.y != means.y)
+    {
+      centroids_changed = true
+      centroid.y = means.y
+    }
+  }
   return { centroids, centroids_changed }
 }
 
@@ -156,6 +179,46 @@ function calculate_new_centroids(datapoints, centroids, measure_function) {
  */
 function get_random_centroids(datapoints, k) {
   let centroids = []
-  // TODO
+  let minx = 0
+  let miny = 0
+  let maxx = 0
+  let maxy = 0
+  for (let i = 0; i < datapoints; i++)
+  {
+    let obj = datapoints[i]
+    if (i == 0)
+    {
+      minx = obj.x
+      miny = obj.y
+      maxx = obj.x
+      maxy = obj.y
+    }
+    else
+    {
+      if (minx > obj.x)
+      {
+        minx = obj.x
+      }
+      if (miny > obj.y)
+      {
+        miny = obj.y
+      }
+      if (maxx < obj.x)
+      {
+        maxx = obj.x
+      }
+      if (maxy < obj.y)
+      {
+        maxy = obj.y
+      }
+    }
+  }
+  for (let i = 0; i < k; i++)
+  {
+    let randomx = Math.random() * (maxx - minx) + minx
+    let randomy = Math.random() * (maxy - miny) + miny
+    let newcentroid = {x: randomx, y: randomy}
+    centroids.push(newcentroid)
+  }
   return centroids
 }
