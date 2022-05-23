@@ -7,8 +7,17 @@
  * @returns {{x, y}} - the measure (here: mean)
  */
 function mean(datapoints) {
-  // TODO
-  return { x: 0, y: 0 }
+  let sumx = 0
+  let sumy = 0
+  for (let i = 0; i < datapoints.length; i++)
+  {
+    let obj = datapoints[i]
+    sumx = sumx + obj.x
+    sumy = sumy + obj.y
+  }
+  let xmean = sumx / datapoints.length
+  let ymean = sumy / datapoints.length
+  return { x: xmean, y: ymean }
 }
 /**
  * Calculates the median for x and y of the given data points.
@@ -17,8 +26,39 @@ function mean(datapoints) {
  * @returns {{x, y}} - the measure (here: median)
  */
 function median(datapoints) {
-  // TODO
-  return { x: 0, y: 0 }
+  let xvalues = []
+  let yvalues = []
+  for (let i = 0; i < datapoints.length; i++)
+  {
+    let obj = datapoints[i]
+    xvalues.push(obj.x)
+    yvalues.push(obj.y)
+  }
+  xvalues.sort(function(a, b){return b - a})
+  yvalues.sort(function(a, b){return b - a})
+  let xmed = 0
+  let ymed = 0
+  if (xvalues.length % 2 == 0)
+  {
+    let element1 = xvalues[Math.floor(xvalues.length / 2) - 1]
+    let element2 = xvalues[Math.floor(xvalues.length / 2)]
+    xmed = (element1 + element2) / 2.0
+  }
+  else
+  {
+    xmed = xvalues[Math.floor(xvalues.length / 2)]
+  }
+  if (yvalues.length % 2 == 0)
+  {
+    let element1 = yvalues[Math.floor(yvalues.length / 2) - 1]
+    let element2 = yvalues[Math.floor(yvalues.length / 2)]
+    ymed = (element1 + element2) / 2.0
+  }
+  else
+  {
+    ymed = yvalues[Math.floor(yvalues.length / 2)]
+  }
+  return { x: xmed, y: ymed }
 }
 
 /**
@@ -29,8 +69,14 @@ function median(datapoints) {
  * @returns {Number} - the distance of point1 and point2
  */
 function euclid(point1, point2) {
-  // TODO
-  return 0
+  let x1 = point1.x
+  let x2 = point2.x
+  let y1 = point1.y
+  let y2 = point2.y
+  var a = x1 - x2
+  var b = y1 - y2
+  var c = Math.sqrt(a*a + b*b) //pythagorean term
+  return c
 }
 
 /**
@@ -41,8 +87,12 @@ function euclid(point1, point2) {
  * @returns {Number} - the distance of point1 and point2
  */
 function manhattan(point1, point2) {
-  // TODO
-  return 0
+  let x1 = point1.x
+  let x2 = point2.x
+  let y1 = point1.y
+  let y2 = point2.y
+  let distance = Math.abs(x1-x2) + Math.abs(y1-y2)
+  return distance
 }
 
 /**
@@ -58,7 +108,28 @@ function assign_datapoints_to_centroids(
   centroids,
   distance_function
 ) {
-  // TODO
+  for (let i = 0; i < datapoints.length; i++)
+  {
+    let obj = datapoints[i]
+    let min_dist = []
+    for (let j = 0; j < centroids.length; j++)
+    {
+      if (j==0)
+      {
+        let dist = distance_function(obj, centroids[j])
+        min_dist = [j, dist]
+      }
+      else
+      {
+        let dist = distance_function(obj, centroids[j])
+        if (dist < min_dist[1])
+        {
+          min_dist = [j, dist]
+        }
+      }
+    }
+    obj.centroid_index = min_dist[0]
+  }
   return datapoints
 }
 
