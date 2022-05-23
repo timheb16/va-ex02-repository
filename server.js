@@ -644,6 +644,105 @@ let get_data_averages = () => {
    
 }
 
+let clean_data_task_2 = () => {
+    fs.readFile("Averages_2016.json", "utf8", (err, raw_data) => {
+        if (err) {
+            console.error(err)
+        return
+        }
+        let data = JSON.parse(raw_data)
+
+        for (let i = 0; i < data.length; i++)
+        {
+            let obj = data[i]
+            delete obj.avg_co
+        }
+        remainingData = data.filter(i => i.avg_so2 != null)
+        console.log(remainingData)
+
+        let all_no2 = []
+        let all_o3 = []
+        let all_pm10 = []
+
+        for (let i = 0; i < remainingData.length; i++)
+        {
+            let obj = remainingData[i]
+            if (obj.avg_no2 != null)
+            {
+                all_no2.push(parseFloat(obj.avg_no2))
+            }
+            if (obj.avg_o3 != null)
+            {
+                all_o3.push(parseFloat(obj.avg_o3))
+            }
+            if (obj.avg_pm10 != null)
+            {
+                all_pm10.push(parseFloat(obj.avg_pm10))
+            }
+        }
+
+        let no2_sum = 0
+        let o3_sum = 0
+        let pm10_sum = 0
+
+        for (let i = 0; i < all_no2.length; i++)
+        {
+            no2_sum = no2_sum + all_no2[i]
+        }
+        for (let i = 0; i < all_o3.length; i++)
+        {
+            o3_sum = o3_sum + all_o3[i]
+        }
+        for (let i = 0; i < all_pm10.length; i++)
+        {
+            pm10_sum = pm10_sum + all_pm10[i]
+        }
+
+        let no2_avg = (no2_sum / all_no2.length).toFixed(2)
+        let o3_avg = (o3_sum / all_o3.length).toFixed(2)
+        let pm10_avg = (pm10_sum / all_pm10.length).toFixed(2)
+
+        for (let i = 0; i < remainingData.length; i++)
+        {
+            let obj = remainingData[i]
+            if (obj.avg_no2 === null)
+            {
+                obj.avg_no2 = no2_avg
+                console.log("null ersetzt mit no2")
+            }
+            if (obj.avg_o3 === null)
+            {
+                obj.avg_o3 = o3_avg
+                console.log("null ersetzt mit o3")
+
+            }
+            if (obj.avg_pm10 === null)
+            {
+                obj.avg_pm10 = pm10_avg
+                console.log("null ersetzt mit pm10")
+
+            }
+        }
+
+        let upper_bound_no2 = 75
+        let upper_bound_pm10 = 25
+        let upper_bound_so2 = 7
+        remainingData = remainingData.filter(data => parseFloat(data.avg_no2) < upper_bound_no2);
+        remainingData = remainingData.filter(data => parseFloat(data.avg_pm10) < upper_bound_pm10);
+        remainingData = remainingData.filter(data => parseFloat(data.avg_so2) < upper_bound_so2);
+        console.log(remainingData)
+        //socket.emit('cleaned_data', remainingData)
+        
+        fs.writeFile("Cleaned_Averages_2016.json", JSON.stringify(remainingData), (err) => {
+            if (err) {
+            console.error(err)
+            }
+        })
+        
+    })
+}
+
+
 socket.on("paint_histogram", visualisation)
     
 socket.on("disconnect", disconnect)
@@ -661,6 +760,8 @@ socket.on("get_data_2019", get_data_2019)
 socket.on("get_data_task_2", get_data_task_2)
 
 socket.on("compute_averages_task_2", compute_averages_task_2)
+
+socket.on("clean_data_task_2", clean_data_task_2)
 
 })
 

@@ -58,6 +58,11 @@ socket.on("data_2019", (obj) => {
   socket.emit("get_data_task_2", { example_parameter: "hi" })
 }
 
+function clean_data_task_2() {
+  //socket.emit("get_station_data", { example_parameter: "hi" })
+  socket.emit("clean_data_task_2", { example_parameter: "hi" })
+}
+
   function compute_averages_task_2() {
   socket.emit("compute_averages_task_2", { example_parameter: "hi" })
 }
@@ -196,6 +201,7 @@ function access_data_2019() {
     data_2019_avg = total_avg
     //console.log("total avg for year 2019: " + data_2019_avg)
 }
+
 
 let svg = d3.select("#svgRoot")
 let g_bars = svg.append("g").attr("class", "g_bar")
